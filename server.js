@@ -7,9 +7,11 @@ const express = require('express')
 const app = express()
 const expressLayouts = require('express-ejs-layouts')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 
-// Import index router
+// Import routes
 const indexRouter = require('./routes/index')
+const dishesRouter = require('./routes/dishes')
 
 // Let app know what's going on
 app.set('view engine', 'ejs')
@@ -17,6 +19,7 @@ app.set('views', __dirname + '/views')
 app.set('layout', 'layouts/layout')
 app.use(expressLayouts)
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: false}))
 
 // MONGODB
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })
@@ -25,6 +28,7 @@ db.on('error', error => console.error(error))
 db.once('open', () => console.log('Connected to Mongoose'))
 
 app.use('/', indexRouter)
+app.use('/dishes', dishesRouter)
 
 // Tell app to listen to a port
 app.listen(process.env.PORT || 3000)
