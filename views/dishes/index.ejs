@@ -1,9 +1,11 @@
 <h2>Search recipes</h2>
 <form action="/dishes" method="GET">
     <label>What do you wanna eat?</label>
+    <br>
     <input type="text" name="dishName" value="<%= searchOptions.dishName %>">
     <button type="submit">Search</button>
 </form>
+<br>
 <% dishes.forEach(dish => { %>
-    <div><%= dish.dishName %></div>
+    <a href="/dish/<%= dish.dishName %>"><%= dish.dishName %></a><br>
     <% }) %>
