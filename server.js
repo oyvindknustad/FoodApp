@@ -13,6 +13,7 @@ const bodyParser = require('body-parser')
 const indexRouter = require('./routes/index')
 const dishesRouter = require('./routes/dishes')
 const dishRouter = require('./routes/dish')
+const goodsRouter = require('./routes/goods')
 
 // Let app know what's going on
 app.set('view engine', 'ejs')
@@ -31,6 +32,9 @@ db.once('open', () => console.log('Connected to Mongoose'))
 app.use('/', indexRouter)
 app.use('/dishes', dishesRouter)
 app.use('/dish', dishRouter)
+app.use('/goods', goodsRouter)
+
+
 
 // Tell app to listen to a port
 app.listen(process.env.PORT || 3000, () => console.log('App available on http://127.0.0.1:3000'))

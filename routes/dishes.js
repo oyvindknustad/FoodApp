@@ -6,7 +6,6 @@ const Dish = require('../models/dish') // Import model
 // Get all dishes
 router.get('/', async (req, res) => {
     let searchOptions = {}
-    
     if (req.query.dishName != null && req.query.dishName !== "") {
         searchOptions.dishName = new RegExp(req.query.dishName, 'i')
     }
