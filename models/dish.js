@@ -5,6 +5,29 @@ const dishSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    ingredients: {
+        type: Map,
+        of: new mongoose.Schema({
+            ingredientName: {
+                type: String
+            },
+            ingredientType: {
+                type: String
+            },
+            amount: {
+                type: Number
+            },
+            metric: {
+                type: String
+            },
+            priceKg: {
+                type: Number
+            },
+            shop: {
+                type: String
+            }
+    })
+},
     description: {
         type: String
     },
