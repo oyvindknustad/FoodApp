@@ -1,0 +1,46 @@
+<% if (goods) { %>
+    <form action="/goodsNewDish" method="GET">
+        <input type="text" name="ingredientName" value="<%= searchOptions.ingredientName %>">
+        <button type="submit">Search</button>
+    </form><br>
+    <a href="">Add item</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Ingredient</th>
+                <th>Weight</th>
+                <th>Price</th>
+                <th>Ingredient Type</th>
+                <th>Vinmonopolet</th>
+                <th>Smak Av Italia</th>
+                <th>IntFood</th>
+                <th>Bunnpris</th>
+                <th>Kiwi</th>
+                <th>Meny</th>
+                <th>Mega</th>
+                <th>Extra</th>
+                <th>Shop</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% goods.forEach(ingredient => { %>
+                <tr>
+                    <td><%= ingredient[0] %> <%= ingredient.ingredientName %></td>
+                    <td><%= ingredient.weight %></td>
+                    <td><%= ingredient.price %></td>
+                    <td><%= ingredient.type %></td>
+                    <td><%= ingredient.Shops.vinmonopolet %></td>
+                    <td><%= ingredient.Shops.smakAvItalia %></td>
+                    <td><%= ingredient.Shops.intFood %></td>
+                    <td><%= ingredient.Shops.bunnpris %></td>
+                    <td><%= ingredient.Shops.Kiwi %></td>
+                    <td><%= ingredient.Shops.meny %></td>
+                    <td><%= ingredient.Shops.mega %></td>
+                    <td><%= ingredient.Shops.extra %></td>
+                    <td><%= ingredient.Shops.shop %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } %>
+  

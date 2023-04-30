@@ -1,5 +1,6 @@
 <% if (dish) { %>
     <h2><%= dish.dishName %></h2>
+    <p><%= dish.description %></p>
     <% if (dish.ingredients) { %>
         <table>
             <thead>
@@ -11,21 +12,53 @@
                 </tr>
             </thead>
             <tbody>
-            <% let total = 0 %>
+                <% const minPrice = [] %>
+                <% const maxPrice = [] %>
+                <% let totalMax = [] %>
+                <% let totalMin = [] %>
+                <% const total = [] %>
+            
+            <!-- Find price in goods that correlate with the ingredient in dishesColl -->
             <% for (let ingredient of dish.ingredients.values()) { %>
                 <tr>
                     <td><%= ingredient.ingredientName %></td>
                     <td><%= ingredient.amount %></td>
                     <td><%= ingredient.metric %></td>
-                    <td><%= ingredient.priceKg / 1000 * ingredient.amount %></td>
+
+                    <% const good = goods.find(g => g.ingredientName === ingredient.ingredientName); %>
+                    <% if (good && good.Shops) { %>
+                        <% const shopPrice = []; %>    
+                        <% for (const shop in good.Shops) { %>
+                            <% if (!isNaN(good.Shops[shop]) && typeof good.Shops[shop] === 'number') { %>
+                                <% sp = good.Shops[shop] / 1000 * ingredient.amount; %>
+                                <% shopPrice.push(sp.toFixed(2)); %>
+                                <% } %>
+                                <% } %>
+                                <% minPrice.push(Math.min(...shopPrice)) %>
+                                <% maxPrice.push(Math.max(...shopPrice)) %>
+                                
+                        <td><%= shopPrice.join(' - ') %></td>
+                    <% } else { %>
+                        <td></td>
+                    <% } %>
+
                 </tr>
-                <% total += ingredient.priceKg / 1000 * ingredient.amount %>
-            <% } %>
+                
+                <!-- Summarize totalMin and totalMax and add them to total -->
+                <% try { %>
+                    <% totalMin = minPrice.reduce((acc, curr) => acc + curr) %>
+                    <% totalMax= maxPrice.reduce((acc, curr) => acc + curr) %>
+                    <% } catch { %>
+                        <% totalMin = 0 %>
+                        <% totalMax = 0 %>
+                        <% } %>
+                <% } %>
+            <% total.push(totalMin, totalMax) %>
             </tbody>
             <tfoot>
                 <tr>
                     <th colspan="3">Total:</th>
-                    <td><%= total %></td>
+                    <td><%= total.join(' - ') %></td>
                 </tr>
             </tfoot>
         </table>

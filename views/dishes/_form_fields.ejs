@@ -1,13 +1,100 @@
 <!-- 7:53 https://www.youtube.com/watch?v=Zi2UwhpooF8&list=PLZlA0Gpn_vH8jbFkBjOuFjhxANC63OmXM&index=7&ab_channel=WebDevSimplified -->
-<label for="Dish name: "></label>
-<div>
-    <input type="text" name="dishName", value="<%= dishesColl.dishName %>">
+<!-- https://www.youtube.com/watch?v=p0yrMA2VHg0 -->
+
+<% const metrics = ['g', 'tbs', 'ts', 'pcs'] %>
+
+<label>Enter dish name:</label>
+<input type="text" name="dishName" value="<%= dishesColl.dishName %>"><br>
+
+<label>Enter dish type:</label>
+<input type="text" name="dishType" value="<%= dishesColl.dishType %>"><br>
+
+<label>Enter dish catecory:</label>
+<input type="text" name="dishCategory" value="<%= dishesColl.dishCategory %>"><br>
+
+<div class="ingredientForm">
+    <div class="wrap">
+        <label>Ingredient</label>
+        <a href="#" class="add">&plus;</a>
+    </div>
+    <div class="inputGroup">
+
+    </div>
 </div>
-<div>
-    <label>Image</label>
-    <input type="file" name="dishImage">
-</div>
-<div>
-    <label>Description</label>
-    <textarea name="description"><%= dishesColl.description %></textarea>
-</div>
+
+
+
+<label>Image</label>
+<input type="file" name="dishImage"><br>
+<label>Description</label>
+<textarea name="description"><%= dishesColl.description %></textarea>
+
+<script>
+    const addButton = document.querySelector(".add");
+    const input = document.querySelector(".inputGroup");
+
+    function removeInput() {
+        this.parentElement.remove();
+    }
+
+    function addInput() {
+        const ingredientName = document.createElement("select");
+        const amount = document.createElement("input");
+        const metric = document.createElement("select");
+
+        ingredientName.name = "ingredientName";
+        amount.name = "amount";
+        amount.type = "number";
+        metric.name = "metric";
+        
+        const button = document.createElement("a");
+        button.className = "delete";
+        button.innerHTML = "&times;";
+
+        button.addEventListener("click", removeInput);
+
+        const flex = document.createElement("div");
+        flex.className = "flex";
+
+        input.appendChild(flex);
+        flex.appendChild(ingredientName);
+        flex.appendChild(amount);
+        flex.appendChild(metric);
+        flex.appendChild(button);
+
+        
+
+        
+        // Add options to ingredientName dropdown
+        fetch('/goodsNewDish')
+        .then(response => response.text())
+        .then(ingr => {
+            // Process the data received from the server. ingr is not defined in the route. I don't know why it still works.
+            
+            const ingredientOptions = JSON.parse(ingr)
+            for (let i = 0; i < ingredientOptions.length; i++) {
+             const option = document.createElement("option");
+             option.value = ingredientOptions[i];
+             option.text = ingredientOptions[i];
+             ingredientName.appendChild(option);
+         }
+        })
+        .catch(error => {
+            // Handle any errors that occurred during the request
+            console.error(error);
+        });
+        
+
+
+        // Add options to metric dropdown
+         const metricOptions = ['g', 'tbs', 'ts', 'pcs']; // Replace with your options
+         for (let i = 0; i < metricOptions.length; i++) {
+             const option = document.createElement("option");
+             option.value = metricOptions[i];
+             option.text = metricOptions[i];
+             metric.appendChild(option);
+         }
+     }
+
+    addButton.addEventListener("click", addInput);
+</script>

@@ -1,33 +1,36 @@
 const mongoose = require('mongoose')
 
+const dishImageBasePath = 'uploads/dishImages'
+
+// Define Ingredient Schema
+  const ingredientSchema = new mongoose.Schema({
+    ingredientName: {
+        type: String
+    },
+    amount: {
+        type: Number
+    },
+    metric: {
+        type: String
+    },
+    shop:{
+        type:  String
+    }
+  });
+
+// Define Dish Schema
 const dishSchema = new mongoose.Schema({
     dishName: {
         type: String,
         required: true
     },
-    ingredients: {
-        type: Map,
-        of: new mongoose.Schema({
-            ingredientName: {
-                type: String
-            },
-            ingredientType: {
-                type: String
-            },
-            amount: {
-                type: Number
-            },
-            metric: {
-                type: String
-            },
-            priceKg: {
-                type: Number
-            },
-            shop: {
-                type: String
-            }
-    })
-},
+    dishType: {
+        type: String
+    },
+    dishCategory: {
+        type: String
+    },
+    ingredients: [ingredientSchema],
     description: {
         type: String
     },
@@ -39,4 +42,6 @@ const dishSchema = new mongoose.Schema({
 { collection: 'dishesColl'}
 )
 
+module.exports = mongoose.model('Ingredient', ingredientSchema)
 module.exports = mongoose.model('Dish', dishSchema)
+module.exports.dishImageBasePath = dishImageBasePath
