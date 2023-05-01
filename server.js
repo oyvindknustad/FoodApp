@@ -1,6 +1,4 @@
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config()
-}
+
 
 // Import express into the app variable and import expressLayouts
 const express = require('express')
