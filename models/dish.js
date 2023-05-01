@@ -34,6 +34,9 @@ const dishSchema = new mongoose.Schema({
     description: {
         type: String
     },
+    price: {
+        type: [Number, Number]
+    },
     dishImage: {
         // 3:50 https://www.youtube.com/watch?v=Zi2UwhpooF8&list=PLZlA0Gpn_vH8jbFkBjOuFjhxANC63OmXM&index=7&ab_channel=WebDevSimplified
         type: String

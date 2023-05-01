@@ -15,8 +15,7 @@ const dishesRouter = require('./routes/dishes')
 const dishRouter = require('./routes/dish')
 const goodsRouter = require('./routes/goods')
 const goodsNewDishRouter = require('./routes/goodsNewDish')
-
-
+const calculatePricesRouter = require('./routes/calculatePrices')
 
 // Let app know what's going on
 app.set('view engine', 'ejs')
@@ -25,6 +24,7 @@ app.set('layout', 'layouts/layout')
 app.use(expressLayouts)
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false}))
+
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -40,7 +40,7 @@ app.use('/dishes', dishesRouter)
 app.use('/dish', dishRouter)
 app.use('/goods', goodsRouter)
 app.use('/goodsNewDish', goodsNewDishRouter)
-
+app.use('/calculatePrices', calculatePricesRouter)
 
 
 // Tell app to listen to a port
