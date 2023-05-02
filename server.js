@@ -1,4 +1,6 @@
-
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+}
 
 // Import express into the app variable and import expressLayouts
 const express = require('express')
@@ -28,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // MONGODB
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })
+mongoose.connect(process.env.DATABASE_URL)
 const db = mongoose.connection
 db.on('error', error => console.error(error))
 db.once('open', () => console.log('Connected to Mongoose'))
